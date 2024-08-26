@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: read-file-from-pvc
+  labels:
+    name: read-file-from-pvc
+spec:
+  containers:
+  - name: file-read
+    image: "busybox"
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    command: ["sleep", "30000"]
+    volumeMounts:
+      - name: local-storage
+        mountPath: /my-path
+  volumes:
+    - name: local-storage
+      persistentVolumeClaim:
+        claimName: local-pvc
